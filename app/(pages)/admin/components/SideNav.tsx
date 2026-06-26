@@ -36,8 +36,10 @@ const SideNav = ({classList}: {classList: string}) => {
                 navLinks.map((link, index) => {
                   const Icon = link.icon;
                   return (
-                    <li key={index} className="flex px-2 py-3 mb-3 rounded-lg cursor-pointer text-xs font-semibold hover:text-emerald-600 hover:bg-emerald-50 transition transform duration-300">
-                      <Link href={link.href} className="flex items-center gap-3"><Icon className="h-5 w-5"/>{link.label}</Link>
+                    <li key={index} className="flex">
+                      <Link href={link.href} className="flex items-center gap-3 w-100 p-4 py-3 mb-2 rounded-lg cursor-pointer text-xs font-semibold hover:text-emerald-600 hover:bg-emerald-50 transition transform duration-300">
+                        <Icon className="h-5 w-5"/>{link.label}
+                      </Link>
                     </li>
                   )
                 })
@@ -46,8 +48,10 @@ const SideNav = ({classList}: {classList: string}) => {
         </section>
         <section className="link-section">
             <ul>
-              <li className="flex p-4 py-3 mb-2 rounded-lg cursor-pointer text-xs font-semibold hover:text-emerald-600 hover:bg-emerald-50 transition transform duration-300">
-                <Link href='/admin/settings' className="flex items-center gap-3"><Settings className="h-5 w-5" />Settings</Link>
+              <li className="flex">
+                <Link href='/admin/settings' className="flex items-center gap-3 w-100 p-4 py-3 mb-2 rounded-lg cursor-pointer text-xs font-semibold hover:text-emerald-600 hover:bg-emerald-50 transition transform duration-300">
+                  <Settings className="h-5 w-5" />Settings
+                </Link>
               </li>
             </ul>
         </section>

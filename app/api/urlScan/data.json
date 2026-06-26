@@ -1,0 +1,166 @@
+{
+    "logs": [
+        {
+            "title": "Scan Engine",
+            "description": "Initializing URL scan engine...",
+            "timestamp": "00:00:01",
+            "type": "system"
+        },
+        {
+            "title": "Scan Engine",
+            "description": "Initializing URL scan engine...",
+            "timestamp": "00:00:01",
+            "type": "system"
+        },
+        {
+            "title": "Scan Engine",
+            "description": "Target URL: https://example.com",
+            "timestamp": "00:00:02",
+            "type": "system"
+        },
+        {
+            "title": "Scan Engine",
+            "description": "Verifying target URL...",
+            "timestamp": "00:00:03",
+            "type": "system"
+        },
+        {
+            "title": "Scan Engine",
+            "description": "Target URL is reachable",
+            "timestamp": "00:00:04",
+            "type": "success"
+        },
+        {
+            "title": "FireCrawl",
+            "description": "Initializing crawler...",
+            "timestamp": "00:00:05",
+            "type": "info"
+        },
+        {
+            "title": "FireCrawl",
+            "description": "Crawling website...",
+            "timestamp": "00:00:06",
+            "type": "info"
+        },
+        {
+            "title": "FireCrawl",
+            "description": "Completed (Crawled 2 pages)",
+            "timestamp": "00:00:09",
+            "type": "success"
+        },
+        {
+            "title": "Scan Engine",
+            "description": "2 contact email(s) found",
+            "timestamp": "00:00:10",
+            "type": "success"
+        },
+        {
+            "title": "Scan Engine",
+            "description": "Fetching page metadata...",
+            "timestamp": "00:00:11",
+            "type": "info"
+        },
+        {
+            "title": "Scan Engine",
+            "description": "Page metadata fetched successfully",
+            "timestamp": "00:00:12",
+            "type": "success"
+        },
+        {
+            "title": "Scan Engine",
+            "description": "Generating Groq query...",
+            "timestamp": "00:00:13",
+            "type": "info"
+        },
+        {
+            "title": "Scan Engine",
+            "description": "Groq query generated",
+            "timestamp": "00:00:14",
+            "type": "success"
+        },
+        {
+            "title": "Groq",
+            "description": "Running UX audit...",
+            "timestamp": "00:00:15",
+            "type": "info"
+        },
+        {
+            "title": "Groq",
+            "description": "UX audit completed",
+            "timestamp": "00:00:17",
+            "type": "success"
+        },
+        {
+            "title": "Groq",
+            "description": "Running SEO audit...",
+            "timestamp": "00:00:18",
+            "type": "info"
+        },
+        {
+            "title": "Groq",
+            "description": "SEO audit completed",
+            "timestamp": "00:00:20",
+            "type": "success"
+        },
+        {
+            "title": "Groq",
+            "description": "Running CRO audit...",
+            "timestamp": "00:00:21",
+            "type": "info"
+        },
+        {
+            "title": "Groq",
+            "description": "CRO audit completed",
+            "timestamp": "00:00:23",
+            "type": "success"
+        },
+        {
+            "title": "Groq",
+            "description": "Running Trust audit...",
+            "timestamp": "00:00:24",
+            "type": "info"
+        },
+        {
+            "title": "Groq",
+            "description": "Trust audit completed",
+            "timestamp": "00:00:26",
+            "type": "success"
+        },
+        {
+            "title": "Groq",
+            "description": "Running Security audit...",
+            "timestamp": "00:00:27",
+            "type": "info"
+        },
+        {
+            "title": "Groq",
+            "description": "Security audit completed",
+            "timestamp": "00:00:29",
+            "type": "success"
+        },
+        {
+            "title": "Groq",
+            "description": "3 critical issue(s) found",
+            "timestamp": "00:00:30",
+            "type": "warning"
+        },
+        {
+            "title": "Groq",
+            "description": "Generating report...",
+            "timestamp": "00:00:31",
+            "type": "info"
+        },
+        {
+            "title": "Groq",
+            "description": "Report generated successfully",
+            "timestamp": "00:00:33",
+            "type": "success"
+        },
+        {
+            "title": "Scan Engine",
+            "description": "Scan completed",
+            "timestamp": "00:00:34",
+            "type": "success"
+        }
+    ]
+}
