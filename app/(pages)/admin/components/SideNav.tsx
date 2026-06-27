@@ -1,4 +1,6 @@
 "use client"
+import Link from "next/link"
+import { usePathname } from "next/navigation"
 import { 
   ShieldCheck,
   Search,
@@ -8,7 +10,6 @@ import {
   File,
   Settings
 } from "lucide-react"
-import Link from "next/link"
 
 const navLinks = [
   {label: "Discover", icon: Search, href: "/admin/discover"},
@@ -16,7 +17,9 @@ const navLinks = [
   {label: "Lead", icon: User, href: "/admin/lead"},
   {label: "Outreach", icon: Send, href: "/admin/outreach"},
   {label: "Reports", icon: File, href: "/admin/reports"},
+  { label: "Settings", icon: Settings, href: "/admin/settings" },
 ]
+
 
 const SideNav = ({classList}: {classList: string}) => {
   return (
@@ -37,7 +40,10 @@ const SideNav = ({classList}: {classList: string}) => {
                   const Icon = link.icon;
                   return (
                     <li key={index} className="flex">
-                      <Link href={link.href} className="flex items-center gap-3 w-100 p-4 py-3 mb-2 rounded-lg cursor-pointer text-xs font-semibold hover:text-emerald-600 hover:bg-emerald-50 transition transform duration-300">
+                      <Link href={link.href} 
+                        className={`flex items-center gap-3 w-100 p-4 py-3 mb-2 rounded-lg cursor-pointer text-xs font-semibold transition transform duration-300
+                        ${usePathname() === link.href ? "text-white bg-emerald-500" : "text-gray-600 hover:text-white hover:bg-emerald-500"}
+                        `}>
                         <Icon className="h-5 w-5"/>{link.label}
                       </Link>
                     </li>
@@ -46,15 +52,17 @@ const SideNav = ({classList}: {classList: string}) => {
               }
             </ul>
         </section>
-        <section className="link-section">
+        {/* <section className="link-section">
             <ul>
               <li className="flex">
-                <Link href='/admin/settings' className="flex items-center gap-3 w-100 p-4 py-3 mb-2 rounded-lg cursor-pointer text-xs font-semibold hover:text-emerald-600 hover:bg-emerald-50 transition transform duration-300">
+                <Link href='/admin/settings' 
+                  className={`flex items-center gap-3 w-100 p-4 py-3 mb-2 rounded-lg cursor-pointer text-xs font-semibold transition transform duration-300
+                  `}>
                   <Settings className="h-5 w-5" />Settings
                 </Link>
               </li>
             </ul>
-        </section>
+        </section> */}
     </div>
   )
 }

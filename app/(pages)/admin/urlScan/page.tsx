@@ -11,6 +11,7 @@ import {
   Layers,
   CheckCircle
 } from "lucide-react"
+
 import { Input } from "@/components/ui/input"
 import ScanTerminal from '../components/ScanTerminal'
 import ScanResult from '../components/ScanResult'
@@ -92,7 +93,6 @@ const UrlScan = () => {
   return (
     <main>
       <Toaster/>
-      {/* <TitleSection title="Url Scan" description="Scan any website for SEO, performance, security & more."/> */}
       <div className='min-h-50 rounded-lg shadow-md shadow-gray-200 border border-gray-100 py-5 px-6'>
         <section className='flex items-center gap-2 mb-5'>
             <span className='h-12 w-12 rounded-full bg-emerald-100 flex justify-center items-center'>
@@ -140,10 +140,10 @@ const UrlScan = () => {
           {
             hasScanned ? 
             (<>
-              <div className='w-1/2 border border-gray-100 rounded-lg shadow-md shadow-gray-200 max-h-125 overflow-auto'>
+              <div className='w-1/2 border border-gray-100 rounded-lg shadow-md shadow-gray-200 h-127 overflow-auto'>
                 <ScanTerminal />
               </div>
-                <div className='flex-1 border border-gray-100 rounded-lg shadow-md shadow-gray-200 max-h-125 overflow-auto'>
+                <div className='flex-1 border border-gray-100 rounded-lg shadow-md shadow-gray-200 h-127 overflow-auto'>
                 <ScanResult />
               </div>
             </>

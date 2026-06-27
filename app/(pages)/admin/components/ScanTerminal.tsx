@@ -2,10 +2,8 @@
 import axios from "axios"
 import React from "react"
 import {
-    Check,
     CircleCheck,
     CirclePlay,
-    Trash,
     Trash2
 } from "lucide-react"
 
@@ -46,11 +44,13 @@ const ScanTerminal = () => {
   },[logs])
 
   return (
-      <div className="terminal text-sm overflow-hidden p-4">
+      <div className="terminal text-sm overflow-hidden p-4 px-6 h-full">
             <div className="terminal-header flex align-center justify-between">
                 <div className="flex gap-4 items-center">
                     <h1 className="text-md font-bold text-black">Live Terminal</h1>
-                    <span className="text-xs text-emerald-500 flex gap-1 items-center"><CirclePlay className="h-2 w-2 fill-emerald-500"/> Scanning in progress...</span>
+                    <span className="text-xs text-emerald-500 flex gap-1 items-center">
+                        <CirclePlay className="h-2 w-2 fill-emerald-500"/> Scanning in progress...
+                    </span>
                 </div>
                 <div className="flex gap-4 items-center text-xs font-semibold">
                     <button className="flex items-center gap-2 px-2 py-1 border border-gray-200 rounded-sm cursor-pointer hover:shadow-lg">
@@ -60,7 +60,7 @@ const ScanTerminal = () => {
             </div>
             <div
                 ref={terminalRef}
-                className="flex-1 overflow-y-auto p-4 text-xs leading-relaxed space-y-1 h-90 font-mono bg-gray-800 text-emerald-500 mt-2"
+                className="flex-1 overflow-y-auto p-4 text-xs leading-relaxed space-y-1 h-90 font-mono bg-gray-950 text-emerald-500 mt-4"
                 style={{ scrollbarWidth: "thin" }}
             >
                 {
@@ -75,13 +75,13 @@ const ScanTerminal = () => {
                     })
                 }
             </div>
-            <div className="terminal-footer px-4 py-3 flex gap-4 justify-between rounded-lg bg-gray-50 mt-2 text-gray-600 text-xs border border-gray-200 ">
-                    <span className="  flex gap-1 items-center">
-                        <CircleCheck className="h-4 w-4 text-white fill-emerald-400" /> Auto-scroll enabled
-                    </span>
-                    <span className="">
-                        Elapsed time: 00:00:34
-                    </span>
+            <div className="terminal-footer px-4 py-3 flex gap-4 justify-between rounded-lg bg-gray-50 mt-4 text-gray-600 text-xs border border-gray-200 ">
+                <span className="  flex gap-1 items-center">
+                    <CircleCheck className="h-4 w-4 text-white fill-emerald-400" /> Auto-scroll enabled
+                </span>
+                <span className="">
+                    Elapsed time: 00:00:34
+                </span>
             </div>
       </div>
   )
