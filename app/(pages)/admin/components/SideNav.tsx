@@ -12,9 +12,9 @@ import {
 } from "lucide-react"
 
 const navLinks = [
-  {label: "Discover", icon: Search, href: "/admin/discover"},
   {label: "Url Scan", icon: Scan, href: "/admin/urlScan"},
-  {label: "Lead", icon: User, href: "/admin/lead"},
+  {label: "Discover Leads", icon: Search, href: "/admin/discover"},
+  {label: "Saved Leads", icon: User, href: "/admin/lead"},
   {label: "Outreach", icon: Send, href: "/admin/outreach"},
   {label: "Reports", icon: File, href: "/admin/reports"},
   { label: "Settings", icon: Settings, href: "/admin/settings" },
@@ -41,7 +41,7 @@ const SideNav = ({classList}: {classList: string}) => {
                   return (
                     <li key={index} className="flex">
                       <Link href={link.href} 
-                        className={`flex items-center gap-3 w-100 p-4 py-3 mb-2 rounded-lg cursor-pointer text-xs font-semibold transition transform duration-300
+                        className={`flex items-center gap-3 w-100 p-3 mb-2 rounded-lg cursor-pointer text-xs font-semibold transition transform duration-300
                         ${usePathname() === link.href ? "text-white bg-emerald-500" : "text-gray-600 hover:text-white hover:bg-emerald-500"}
                         `}>
                         <Icon className="h-5 w-5"/>{link.label}
