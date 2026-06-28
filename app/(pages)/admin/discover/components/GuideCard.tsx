@@ -11,17 +11,17 @@ interface GuideCardProps {
 
 const GuideCard = ({number, Icon, title, description}: GuideCardProps) => {
   return (
-      <div className='border mt-2'>
-          <span className='text-[10px] h-4 w-4 rounded-full bg-emerald-600 flex justify-center items-center text-white p-2'>
+      <div className='mt-3 flex items-center gap-4 px-2'>
+          <span className='font-bold text-sm'>
               {number}
           </span>
-          <div className="flex mt-1 gap-2">
-              <span className='h-12 w-12 rounded-lg bg-emerald-100 flex justify-center items-center'>
-                  <Icon className='h-8 w-8 text-emerald-600' />
+          <div className="flex items-center gap-4 text-xs">
+              <span className='h-8 w-8 rounded-lg bg-emerald-100 flex justify-center items-center'>
+                  <Icon className='h-5 w-5 text-emerald-600' />
               </span>
-              <div className='bg-red-100'>
-                  <h4 className="text-sm font-semibold text-black">{title}</h4>
-                  <p className="text-xs text-gray-600">{description}</p>
+              <div className=' w-50'>
+                  <h4 className=" font-semibold text-black">{title}</h4>
+                  <p className="">{description}</p>
               </div>
           </div>
       </div>

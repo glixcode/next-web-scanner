@@ -1,6 +1,6 @@
 "use client"
 import Link from "next/link"
-import { usePathname } from "next/navigation"
+
 import { 
   ShieldCheck,
   Search,
@@ -21,7 +21,8 @@ const navLinks = [
 ]
 
 
-const SideNav = ({classList}: {classList: string}) => {
+
+const SideNav = ({classList, pathName}: {classList: string, pathName: string}) => {
   return (
     <div className={classList}>
         <section className="h-35 border-b border-gray-200 flex justify-center items-center mb-3">
@@ -42,7 +43,7 @@ const SideNav = ({classList}: {classList: string}) => {
                     <li key={index} className="flex">
                       <Link href={link.href} 
                         className={`flex items-center gap-3 w-100 p-3 mb-2 rounded-lg cursor-pointer text-xs font-semibold transition transform duration-300
-                        ${usePathname() === link.href ? "text-white bg-emerald-500" : "text-gray-600 hover:text-white hover:bg-emerald-500"}
+                        ${pathName === link.href ? "text-white bg-emerald-500" : "text-gray-600 hover:text-white hover:bg-emerald-500"}
                         `}>
                         <Icon className="h-5 w-5"/>{link.label}
                       </Link>

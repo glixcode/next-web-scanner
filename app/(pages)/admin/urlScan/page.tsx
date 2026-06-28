@@ -99,7 +99,7 @@ const UrlScan = () => {
               <Globe className='h-6 w-6 text-emerald-600'/>
             </span>
             <div>
-              <h2 className="text-lg font-semibold text-black">Start a new scan</h2>
+              <h2 className="text-md font-semibold text-black">Start a new scan</h2>
               <p className="text-xs text-gray-600">Enter a website URL to analyze adn get insights.</p>
             </div>
         </section>
