@@ -1,0 +1,120 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../lib/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  username  String   @unique
+  password  String
+  createdAt DateTime @default(now()) @db.Timestamptz(6)
+}
+
+model Lead {
+  id            String   @id @default(cuid())
+  throughWebSearch Boolean          @default(true)
+  businessName  String?
+  description   String?
+  website       String   @unique
+
+  industry      String?
+
+  status        LeadStatus @default(NEW)
+
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  contacts      Contact[]
+  outreaches    Outreach[]
+  scrappedSummary ScrappedSummary[]
+}
+
+model Contact {
+  id          String @id @default(cuid())
+
+  leadId      String
+
+  name        String?
+  email       String
+  phone       String?
+
+  isPrimary   Boolean @default(false)
+
+  lead        Lead @relation(fields: [leadId], references: [id], onDelete: Cascade)
+}
+
+model ScrappedSummary {
+  id          String @id @default(cuid())
+
+  leadId      String
+  status      String
+  totalUrls   Int?
+  completed   Int?
+  creditUsed  Int?
+
+  lead        Lead @relation(fields: [leadId], references: [id], onDelete: Cascade)
+  pages       Page[]
+}
+
+model Outreach {
+  id             String   @id @default(cuid())
+
+  leadId         String
+
+  recipientEmail String
+
+  subject        String
+
+  status         OutreachStatus
+
+  sentAt         DateTime?
+
+  openedAt       DateTime?
+
+  repliedAt      DateTime?
+
+  createdAt      DateTime @default(now())
+
+  lead           Lead @relation(fields: [leadId], references: [id], onDelete: Cascade)
+}
+
+
+model Page {
+  id          String @id @default(cuid())
+
+  scrappedId  String
+
+  auditScore  Int?
+
+  url         String
+  title       String?
+
+  groqMessage  Json
+  groqReponse Json
+
+  scrapped    ScrappedSummary @relation(fields: [scrappedId], references: [id], onDelete: Cascade)
+}
+
+enum LeadStatus {
+  NEW
+  AUDITED
+  EMAILED
+  OPENED
+  REPLIED
+  MEETING_BOOKED
+  WON
+  LOST
+}
+
+enum OutreachStatus {
+  DRAFT
+  SENT
+  DELIVERED
+  OPENED
+  REPLIED
+  FAILED
+}

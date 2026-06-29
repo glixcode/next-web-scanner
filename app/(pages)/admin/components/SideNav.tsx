@@ -20,8 +20,6 @@ const navLinks = [
   { label: "Settings", icon: Settings, href: "/admin/settings" },
 ]
 
-
-
 const SideNav = ({classList, pathName}: {classList: string, pathName: string}) => {
   return (
     <div className={classList}>

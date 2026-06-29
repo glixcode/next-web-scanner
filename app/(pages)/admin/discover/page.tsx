@@ -8,13 +8,16 @@ import SearchTips from './components/SearchTips';
 import Illustration from "@/public/illustration.png"
 import Image from 'next/image';
 import { post } from '@/lib/api/axios';
+import { SearchResultType } from './types';
 
 const Discover = () => {
-  const [searchResults, setSearchResults] = React.useState([]);
+  const [searchResults, setSearchResults] = React.useState<SearchResultType[]>([]);
   const [hasSearched, setHasSearched] = React.useState(false);
   const [searchKey, setSearchKey] = React.useState('');
 
   const handleSearch = async () => {
+    setHasSearched(false);
+
     if (searchKey === '') {
       toast.error('Please enter a valid search key', {
         position: 'bottom-right',
@@ -27,8 +30,9 @@ const Discover = () => {
     }
 
     const {data, error} = await post('/discover', {searchKey})
-    console.log({ data, error })
+    // console.log({ data, error })
     setHasSearched(true);
+    setSearchResults(data.results);
   }
 
   const guideList = [
@@ -106,47 +110,72 @@ const Discover = () => {
             </section>
           </section>
         </div>
-        <div className='rounded-lg shadow-md shadow-gray-200 border border-gray-100 p-4 mt-4 flex justify-center items-center bg-emerald-50 gap-6'>
-          <div className="image-container w-50">
-            <Image
-              src={Illustration}
-              alt="Image"
-              className="w-full h-full object-cover"
-            />
-          </div>
-          <div className='flex-1'>
-            <h2 className="text-md font-semibold text-black">Find high-potential in minutes</h2>
-            <p className="text-xs text-gray-600">Search millions for businesses, build your lead list, and scan their websites for opportunities</p>
-            <div className="flex flex-wrap">
+        {
+          hasSearched ? 
+          
+          <div className=' mt-5 p-4'>
+            <p className='text-sm font-semibold'>Total Results: {searchResults.length}</p>
+              <div className='mt-2 border-t max-h-150 overflow-auto p-4'>
               {
-                guideList.map((guide, index) => (
-                <section key={index}>
-                  <div className='mt-3 flex items-center gap-2 px-2'>
-                    <span className='h-5 w-5 rounded-lg flex justify-center items-center'>
-                      <Check className='h-5 w-5 text-emerald-500' />
-                    </span>
-                    <div className="flex items-center gap-4 text-xs">
-                      <div className=' w-50'>
-                        <h4 className=" font-semibold text-black">{guide.title}</h4>
-                        <p className="">{guide.description}</p>
+                searchResults.map((result, index) => (
+                  <div key={index} className='border py-2 px-1 mt-2'>
+                    <div className='mt-3 flex items-center gap-2 px-2'>
+                      <img src={`https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=${result.url}&size=128`} alt="Image" className="h-15 object-cover rounded-md border" />
+                      <div>
+                        <h5 className='font-semibold text-md'> {result.title}</h5>
+                        <p className='text-sm'>{result.url}</p>
                       </div>
                     </div>
                   </div>
-                </section>
                 ))
               }
             </div>
-          </div>
-        </div>
-        <div className='rounded-lg shadow-md shadow-gray-200 border border-gray-100 p-4 mt-4 flex justify-center items-center gap-4'>
-          <span className='h-12 w-12 rounded-lg flex justify-center items-center'>
-            <UserRoundSearch className='h-10 w-10 text-emerald-500' />
-          </span>
-          <div className='flex-1'>
-            <h2 className="text-md font-semibold text-black">Ready to find your next client?</h2>
-            <p className="text-xs text-gray-600">Search for businesses, build your list, scan their websites and send winning reports</p>
-          </div>
-        </div>
+          </div> 
+          :
+          <>
+            <div className='rounded-lg shadow-md shadow-gray-200 border border-gray-100 p-4 mt-4 flex justify-center items-center bg-emerald-50 gap-6'>
+              <div className="image-container w-50">
+                <Image
+                  src={Illustration}
+                  alt="Image"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className='flex-1'>
+                <h2 className="text-md font-semibold text-black">Find high-potential in minutes</h2>
+                <p className="text-xs text-gray-600">Search millions for businesses, build your lead list, and scan their websites for opportunities</p>
+                <div className="flex flex-wrap">
+                  {
+                    guideList.map((guide, index) => (
+                    <section key={index}>
+                      <div className='mt-3 flex items-center gap-2 px-2'>
+                        <span className='h-5 w-5 rounded-lg flex justify-center items-center'>
+                          <Check className='h-5 w-5 text-emerald-500' />
+                        </span>
+                        <div className="flex items-center gap-4 text-xs">
+                          <div className=' w-50'>
+                            <h4 className=" font-semibold text-black">{guide.title}</h4>
+                            <p className="">{guide.description}</p>
+                          </div>
+                        </div>
+                      </div>
+                    </section>
+                    ))
+                  }
+                </div>
+              </div>
+            </div>
+            <div className='rounded-lg shadow-md shadow-gray-200 border border-gray-100 p-4 mt-4 flex justify-center items-center gap-4'>
+              <span className='h-12 w-12 rounded-lg flex justify-center items-center'>
+                <UserRoundSearch className='h-10 w-10 text-emerald-500' />
+              </span>
+              <div className='flex-1'>
+                <h2 className="text-md font-semibold text-black">Ready to find your next client?</h2>
+                <p className="text-xs text-gray-600">Search for businesses, build your list, scan their websites and send winning reports</p>
+              </div>
+            </div>
+          </>
+        }
       </div>
         <div className={`w-80 p-2 bg-gray-50 rounded-lg`}>
           <div className='w-full bg-white rounded-lg p-2 overflow-y-auto'>

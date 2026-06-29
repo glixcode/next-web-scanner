@@ -19,3 +19,10 @@ export const post = async(url: string, data: any) => {
         }
     }
 }
+
+export const openStreetMap = axios.create({
+    baseURL: "https://nominatim.openstreetmap.org",
+    headers: {
+        "User-Agent": "YourAppName/1.0 (glix.coder@gmail.com)",
+    },
+});
