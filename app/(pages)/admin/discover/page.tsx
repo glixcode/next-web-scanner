@@ -1,6 +1,6 @@
 "use client"
 import { Input } from '@/components/ui/input';
-import { Globe, Search, ArrowRight, MoveRight, ArrowBigRight, ChevronRight, List, Gauge, Mail, Check, UserRoundSearch } from 'lucide-react';
+import { Globe, Search,Check, UserRoundSearch } from 'lucide-react';
 import React from 'react'
 import toast, { Toaster } from 'react-hot-toast'
 import Guide from './components/Guide';
@@ -9,6 +9,7 @@ import Illustration from "@/public/illustration.png"
 import Image from 'next/image';
 import { post } from '@/lib/api/axios';
 import { SearchResultType } from './types';
+import ListCard from './components/ListCard';
 
 const Discover = () => {
   const [searchResults, setSearchResults] = React.useState<SearchResultType[]>([]);
@@ -30,7 +31,6 @@ const Discover = () => {
     }
 
     const {data, error} = await post('/discover', {searchKey})
-    // console.log({ data, error })
     setHasSearched(true);
     setSearchResults(data.results);
   }
@@ -101,7 +101,6 @@ const Discover = () => {
                     key={index}
                     onClick={() => setSearchKey(search)}
                     className='p-2 px-3 min-h-8 min-w-25 bg-gray-100 text-[11px] flex items-center gap-1 rounded-md border text-black border-gray-100 cursor-pointer'
-                  
                   >
                     <Globe className='h-4 w-4 text-emerald-400' />{search}
                   </span>
@@ -118,15 +117,7 @@ const Discover = () => {
               <div className='mt-2 border-t max-h-150 overflow-auto p-4'>
               {
                 searchResults.map((result, index) => (
-                  <div key={index} className='border py-2 px-1 mt-2'>
-                    <div className='mt-3 flex items-center gap-2 px-2'>
-                      <img src={`https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=${result.url}&size=128`} alt="Image" className="h-15 object-cover rounded-md border" />
-                      <div>
-                        <h5 className='font-semibold text-md'> {result.title}</h5>
-                        <p className='text-sm'>{result.url}</p>
-                      </div>
-                    </div>
-                  </div>
+                  <ListCard key={index} data={result}/>
                 ))
               }
             </div>
