@@ -4,4 +4,7 @@ export interface SearchResultType {
     postal_address: {
         displayAddress: string
     }
+    contact: {
+        telephone: string
+    }
 }

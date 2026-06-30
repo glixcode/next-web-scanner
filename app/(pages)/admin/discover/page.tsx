@@ -10,9 +10,12 @@ import Image from 'next/image';
 import { post } from '@/lib/api/axios';
 import { SearchResultType } from './types';
 import ListCard from './components/ListCard';
+import { SearchResultContext } from './context';
+import LeadQueue from './components/LeadQueue';
 
 const Discover = () => {
   const [searchResults, setSearchResults] = React.useState<SearchResultType[]>([]);
+  const [selectedResults, setSelectedResults] = React.useState<SearchResultType[]>([]);
   const [hasSearched, setHasSearched] = React.useState(false);
   const [searchKey, setSearchKey] = React.useState('');
 
@@ -21,7 +24,7 @@ const Discover = () => {
 
     if (searchKey === '') {
       toast.error('Please enter a valid search key', {
-        position: 'bottom-right',
+        position: 'top-right',
         style: {
           background: '#333',
           color: '#fff',
@@ -33,6 +36,14 @@ const Discover = () => {
     const {data, error} = await post('/discover', {searchKey})
     setHasSearched(true);
     setSearchResults(data.results);
+  }
+
+  const handleCheckChange = (checked: boolean, result: SearchResultType) => {
+    if(checked)
+      setSelectedResults(prev => [...prev, result])
+    else
+      setSelectedResults(prev => prev.filter(item => item.url !== result.url))
+   
   }
 
   const guideList = [
@@ -65,117 +76,122 @@ const Discover = () => {
 
   return (
     <main className='flex w-full h-full gap-2'>
-      <Toaster/>
-      <div className='flex-1'>
-        <div className=' rounded-lg shadow-md shadow-gray-200 border border-gray-100 p-4'>
-          <section className='flex items-center gap-2 mb-5'>
-            <span className='h-12 w-12 rounded-full bg-emerald-100 flex justify-center items-center'>
-              <Search className='h-6 w-6 text-emerald-600' />
-            </span>
-            <div>
-              <h2 className="text-md font-semibold text-black">Search businesses by industry and location</h2>
-              <p className="text-xs text-gray-600">Use keywords like 'law firms in Los Angeles' or 'accountants in New York City'.</p>
-            </div>
-          </section>
-          <section className='flex items-center gap-2 mb-4 text-xs'>
-            <Input
-              onChange={(e) => setSearchKey(e.target.value)}
-              value={searchKey}
-              className="h-10 focus-visible:border-emerald-300 focus-visible:ring-emerald-200/20 text-xs"
-              type="text"
-              placeholder="e.g. law firms in Los Angeles, restaurants in Atlanta, etc."
-            />
-            <button
-              onClick={handleSearch}
-              className='h-10 min-w-25 bg-emerald-500 flex justify-center items-center p-2 rounded-lg gap-1 text-white text-sm cursor-pointer shadow-md hover:shadow-blue-100 '
-            >
-             Search
-            </button>
-          </section>
-          <section className='text-xs'>
-            <h4 className="text-xs font-bold text-black">Example searches</h4>
-            <section className="flex items-center gap-2 font-semibold mt-2">
-              {
-                searches.map((search, index) => (
-                  <span
-                    key={index}
-                    onClick={() => setSearchKey(search)}
-                    className='p-2 px-3 min-h-8 min-w-25 bg-gray-100 text-[11px] flex items-center gap-1 rounded-md border text-black border-gray-100 cursor-pointer'
-                  >
-                    <Globe className='h-4 w-4 text-emerald-400' />{search}
-                  </span>
-                ))
-              }
-            </section>
-          </section>
-        </div>
-        {
-          hasSearched ? 
-          
-          <div className=' mt-5 p-4'>
-            <p className='text-sm font-semibold'>Total Results: {searchResults.length}</p>
-              <div className='mt-2 border-t max-h-150 overflow-auto p-4'>
-              {
-                searchResults.map((result, index) => (
-                  <ListCard key={index} data={result}/>
-                ))
-              }
-            </div>
-          </div> 
-          :
-          <>
-            <div className='rounded-lg shadow-md shadow-gray-200 border border-gray-100 p-4 mt-4 flex justify-center items-center bg-emerald-50 gap-6'>
-              <div className="image-container w-50">
-                <Image
-                  src={Illustration}
-                  alt="Image"
-                  className="w-full h-full object-cover"
-                />
+      <SearchResultContext.Provider 
+        value={{searchResults, selectedResults, setSelectedResults, setSearchResults}}>
+        <Toaster/>
+        <div className='flex-1'>
+          <div className=' rounded-lg shadow-md shadow-gray-200 border border-gray-100 p-4'>
+            <section className='flex items-center gap-2 mb-5'>
+              <span className='h-12 w-12 rounded-full bg-emerald-100 flex justify-center items-center'>
+                <Search className='h-6 w-6 text-emerald-600' />
+              </span>
+              <div>
+                <h2 className="text-md font-semibold text-black">Search businesses by industry and location</h2>
+                <p className="text-xs text-gray-600">Use keywords like 'law firms in Los Angeles' or 'accountants in New York City'.</p>
               </div>
-              <div className='flex-1'>
-                <h2 className="text-md font-semibold text-black">Find high-potential in minutes</h2>
-                <p className="text-xs text-gray-600">Search millions for businesses, build your lead list, and scan their websites for opportunities</p>
-                <div className="flex flex-wrap">
-                  {
-                    guideList.map((guide, index) => (
-                    <section key={index}>
-                      <div className='mt-3 flex items-center gap-2 px-2'>
-                        <span className='h-5 w-5 rounded-lg flex justify-center items-center'>
-                          <Check className='h-5 w-5 text-emerald-500' />
-                        </span>
-                        <div className="flex items-center gap-4 text-xs">
-                          <div className=' w-50'>
-                            <h4 className=" font-semibold text-black">{guide.title}</h4>
-                            <p className="">{guide.description}</p>
+            </section>
+            <section className='flex items-center gap-2 mb-4 text-xs'>
+              <Input
+                onChange={(e) => setSearchKey(e.target.value)}
+                value={searchKey}
+                className="h-10 focus-visible:border-emerald-300 focus-visible:ring-emerald-200/20 text-xs"
+                type="text"
+                placeholder="e.g. law firms in Los Angeles, restaurants in Atlanta, etc."
+              />
+              <button
+                onClick={handleSearch}
+                className='h-10 min-w-25 bg-emerald-500 flex justify-center items-center p-2 rounded-lg gap-1 text-white text-sm cursor-pointer shadow-md hover:shadow-blue-100 '
+              >
+              Search
+              </button>
+            </section>
+            <section className='text-xs'>
+              <h4 className="text-xs font-bold text-black">Example searches</h4>
+              <section className="flex items-center gap-2 font-semibold mt-2">
+                {
+                  searches.map((search, index) => (
+                    <span
+                      key={index}
+                      onClick={() => setSearchKey(search)}
+                      className='p-2 px-3 min-h-8 min-w-25 bg-gray-100 text-[11px] flex items-center gap-1 rounded-md border text-black border-gray-100 cursor-pointer'
+                    >
+                      <Globe className='h-4 w-4 text-emerald-400' />{search}
+                    </span>
+                  ))
+                }
+              </section>
+            </section>
+          </div>
+          {
+            hasSearched ? 
+            <div className=' mt-5 p-4'>
+              <p className='text-sm font-semibold'>Total Results: {searchResults.length}</p>
+                <div className='mt-2 border-t max-h-150 overflow-auto p-4'>
+                {
+                  searchResults.map((result, index) => (
+                    <ListCard key={index} data={result} checkChanged={handleCheckChange}/>
+                  ))
+                }
+              </div>
+            </div> 
+            :
+            <>
+              <div className='rounded-lg shadow-md shadow-gray-200 border border-gray-100 p-4 mt-4 flex justify-center items-center bg-emerald-50 gap-6'>
+                <div className="image-container w-50">
+                  <Image
+                    src={Illustration}
+                    alt="Image"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <div className='flex-1'>
+                  <h2 className="text-md font-semibold text-black">Find high-potential in minutes</h2>
+                  <p className="text-xs text-gray-600">Search millions for businesses, build your lead list, and scan their websites for opportunities</p>
+                  <div className="flex flex-wrap">
+                    {
+                      guideList.map((guide, index) => (
+                      <section key={index}>
+                        <div className='mt-3 flex items-center gap-2 px-2'>
+                          <span className='h-5 w-5 rounded-lg flex justify-center items-center'>
+                            <Check className='h-5 w-5 text-emerald-500' />
+                          </span>
+                          <div className="flex items-center gap-4 text-xs">
+                            <div className=' w-50'>
+                              <h4 className=" font-semibold text-black">{guide.title}</h4>
+                              <p className="">{guide.description}</p>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    </section>
-                    ))
-                  }
+                      </section>
+                      ))
+                    }
+                  </div>
                 </div>
               </div>
-            </div>
-            <div className='rounded-lg shadow-md shadow-gray-200 border border-gray-100 p-4 mt-4 flex justify-center items-center gap-4'>
-              <span className='h-12 w-12 rounded-lg flex justify-center items-center'>
-                <UserRoundSearch className='h-10 w-10 text-emerald-500' />
-              </span>
-              <div className='flex-1'>
-                <h2 className="text-md font-semibold text-black">Ready to find your next client?</h2>
-                <p className="text-xs text-gray-600">Search for businesses, build your list, scan their websites and send winning reports</p>
+              <div className='rounded-lg shadow-md shadow-gray-200 border border-gray-100 p-4 mt-4 flex justify-center items-center gap-4'>
+                <span className='h-12 w-12 rounded-lg flex justify-center items-center'>
+                  <UserRoundSearch className='h-10 w-10 text-emerald-500' />
+                </span>
+                <div className='flex-1'>
+                  <h2 className="text-md font-semibold text-black">Ready to find your next client?</h2>
+                  <p className="text-xs text-gray-600">Search for businesses, build your list, scan their websites and send winning reports</p>
+                </div>
               </div>
+            </>
+          }
+        </div>
+          <div className={`w-80 p-2 bg-gray-50 rounded-lg`}>
+           {
+            selectedResults.length > 0 && <LeadQueue/>
+           }
+            <div className='w-full bg-white rounded-lg p-2 overflow-y-auto'>
+              <Guide/>
             </div>
-          </>
-        }
-      </div>
-        <div className={`w-80 p-2 bg-gray-50 rounded-lg`}>
-          <div className='w-full bg-white rounded-lg p-2 overflow-y-auto'>
-            <Guide/>
-          </div>
-          <div className='w-full bg-white rounded-lg p-2 overflow-y-auto mt-4'>
-            <SearchTips />
-          </div>
-      </div>
+            <div className='w-full bg-white rounded-lg p-2 overflow-y-auto mt-4'>
+              <SearchTips />
+            </div>
+        </div>
+      </SearchResultContext.Provider>
     </main>
   )
 }
