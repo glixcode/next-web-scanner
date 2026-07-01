@@ -23,12 +23,13 @@ export async function POST(request: Request){
         return NextResponse.json({error: "Search key is required"}, {status: 400})
     }
 
-    // try {
-    //     const response = await braveSearch(validation.data.searchKey)
-    //     return NextResponse.json(response)
-    // } catch (e: any) {
-    //     console.log(e.response?.data.error?.meta?.errors);
-    // }
+    try {
+        const response = await braveSearch(validation.data.searchKey)
+        console.log(response)
+        return NextResponse.json(response)
+    } catch (e: any) {
+        console.log(e.response?.data.error?.meta?.errors);
+        return NextResponse.json({})
+    }
     
-    return NextResponse.json(test)
 }

@@ -6,6 +6,7 @@ interface ContextType {
     setSearchResults: React.Dispatch<React.SetStateAction<SearchResultType[]>>
     selectedResults: SearchResultType[]
     setSelectedResults: React.Dispatch<React.SetStateAction<SearchResultType[]>>
+    
 }
 
 export const SearchResultContext = React.createContext<ContextType | undefined>(undefined)

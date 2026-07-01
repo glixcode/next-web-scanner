@@ -20,7 +20,6 @@ const Discover = () => {
   const [searchKey, setSearchKey] = React.useState('');
 
   const handleSearch = async () => {
-    setHasSearched(false);
 
     if (searchKey === '') {
       toast.error('Please enter a valid search key', {
@@ -34,8 +33,11 @@ const Discover = () => {
     }
 
     const {data, error} = await post('/discover', {searchKey})
+
     setHasSearched(true);
-    setSearchResults(data.results);
+    console.log(data)
+    if(data.results !== undefined)
+      setSearchResults(data.results);
   }
 
   const handleCheckChange = (checked: boolean, result: SearchResultType) => {
@@ -124,15 +126,22 @@ const Discover = () => {
           </div>
           {
             hasSearched ? 
-            <div className=' mt-5 p-4'>
-              <p className='text-sm font-semibold'>Total Results: {searchResults.length}</p>
-                <div className='mt-2 border-t max-h-150 overflow-auto p-4'>
-                {
-                  searchResults.map((result, index) => (
-                    <ListCard key={index} data={result} checkChanged={handleCheckChange}/>
-                  ))
-                }
-              </div>
+            <div className=' mt-5 p-2'>
+              { 
+                searchResults.length > 0 ? 
+                <>
+                  <p className='text-sm font-semibold text-black'>Total Results: {searchResults.length}</p>
+                    <div className='mt-2 border-t max-h-150 overflow-auto p-4'>
+                    {
+                      searchResults.map((result, index) => (
+                        <ListCard key={index} data={result} checkChanged={handleCheckChange}/>
+                      ))
+                    }
+                  </div>
+                </>
+                :
+                <div>No results found</div>
+              }
             </div> 
             :
             <>
@@ -180,7 +189,7 @@ const Discover = () => {
             </>
           }
         </div>
-          <div className={`w-80 p-2 bg-gray-50 rounded-lg`}>
+          <div className={`w-90 p-2 bg-gray-50 rounded-lg`}>
            {
             selectedResults.length > 0 && <LeadQueue/>
            }
